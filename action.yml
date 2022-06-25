@@ -1,0 +1,30 @@
+name: "check-crowdin-translation-progress"
+description: "Checks Crowdin translation progress"
+inputs:
+  api-token:
+    description: "Crowdin API token"
+    required: true
+  organization-domain:
+    description: "Domain of your organization (for Crowdin Enterprise only)"
+    required: false
+  project-id:
+    description: "Crowdin project id"
+    required: true
+  branch-name:
+    description: "Crowdin branch name"
+    required: false
+  languages:
+    description: "Languages"
+    required: false
+    default: ""
+  target-progress:
+    description: "Required progress"
+    required: false
+    default: "100"
+  check-approval:
+    description: "Check approval progress instead of translation progress"
+    required: false
+    default: "false"
+runs:
+  using: "node16"
+  main: "index.js"
