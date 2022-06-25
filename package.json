@@ -1,0 +1,24 @@
+{
+  "name": "check-crowdin-translation-progress",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hrabiel/check-crowdin-translation-progress.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hrabiel/check-crowdin-translation-progress/issues"
+  },
+  "homepage": "https://github.com/hrabiel/check-crowdin-translation-progress#readme",
+  "dependencies": {
+    "@actions/core": "^1.9.0",
+    "axios": "^0.27.2"
+  }
+}
