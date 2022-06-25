@@ -34,7 +34,7 @@ async function run() {
     languages.forEach(language => {
       if (!projectLanguages.includes(language)) {
         errors.push(
-          `Language '${language}' does not exist in the project. `
+          `Language '${language}' does not exist in the project. ` +
           `Project's languages are: ${projectLanguages.join(',')}.`
         );
         return;
