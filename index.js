@@ -44,7 +44,7 @@ async function run() {
       const progressPercentage = checkApproval ? progress.approvalProgress : progress.translationProgress;
       if (progressPercentage < targetProgress) {
         errors.push(
-          `${checkApproval ? 'Approval' : 'Translation'} progress for '${language}' (${progressPercentage})%  ` +
+          `${checkApproval ? 'Approval' : 'Translation'} progress for '${language}' (${progressPercentage}%) ` +
           `is less then target progress (${targetProgress}%)`
         )
       }
