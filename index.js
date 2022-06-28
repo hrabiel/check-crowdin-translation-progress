@@ -40,9 +40,10 @@ async function run() {
         : getProjectProgress({ crowdinApi, projectId })
     );
     const projectLanguages = progresses.map(item => item.languageId);
+    const languagesToCheck = languages.length ? languages : projectLanguages;
 
     let errors = [];
-    languages.forEach(language => {
+    languagesToCheck.forEach(language => {
       if (!projectLanguages.includes(language)) {
         errors.push(
           `Language '${language}' does not exist in the project. ` +
