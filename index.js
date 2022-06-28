@@ -13,31 +13,12 @@ async function run() {
     const targetProgress = Number(core.getInput('target-progress'));
     const checkApproval = core.getInput('check-approval') === 'true' ? true : false;
 
-    const apiBaseUrl = organizationDomain
-      ? `https://${organizationDomain}.api.crowdin.com/api/v2/`
-      : 'https://api.crowdin.com/api/v2/';
-    const crowdinApi = axios.create({
-      baseURL: apiBaseUrl,
-      headers: {
-       'Authorization': `Bearer ${apiToken}`
-      }
-    });
-    crowdinApi.interceptors.response.use(
-      response => response,
-      error => {
-        const errorMessageInBody = error.response.data.error?.message;
-        if (errorMessageInBody) {
-          throw new Error(`${error.message}: ${errorMessageInBody}`);
-        }
-
-        throw error;
-      }
-    );
+    setupAxios({ apiToken, organizationDomain });
 
     const progresses = await (
       branchName
-        ? getBranchProgress({ crowdinApi, projectId, branchName })
-        : getProjectProgress({ crowdinApi, projectId })
+        ? getBranchProgress({ projectId, branchName })
+        : getProjectProgress({ projectId })
     );
     const projectLanguages = progresses.map(item => item.languageId);
     const languagesToCheck = languages.length ? languages : projectLanguages;
@@ -70,19 +51,39 @@ async function run() {
   }
 }
 
-async function getBranchProgress({ crowdinApi, projectId, branchName }) {
-  const listBranchesResponse = await crowdinApi.get(`/projects/${projectId}/branches?name=${branchName}`);
+function setupAxios({ apiToken, organizationDomain }) {
+  const apiBaseUrl = organizationDomain
+    ? `https://${organizationDomain}.api.crowdin.com/api/v2/`
+    : 'https://api.crowdin.com/api/v2/';
+
+  axios.defaults.baseUrl = apiBaseUrl;
+  axios.defaults.headers.common['Authorization'] = `Bearer ${apiToken}`;
+  axios.interceptors.response.use(
+    response => response,
+    error => {
+      const errorMessageInBody = error.response.data.error?.message;
+      if (errorMessageInBody) {
+        throw new Error(`${error.message}: ${errorMessageInBody}`);
+      }
+
+      throw error;
+    }
+  );
+}
+
+async function getBranchProgress({ projectId, branchName }) {
+  const listBranchesResponse = await axios.get(`/projects/${projectId}/branches?name=${branchName}`);
   const branchId = listBranchesResponse.data.data[0]?.data?.id;
   if (!branchId) {
     throw new Error(`No branch found with name '${branchName}'`);
   }
 
-  const progressResponse = await crowdinApi.get(`/projects/${projectId}/branches/${branchId}/languages/progress?limit=500`);
+  const progressResponse = await axios.get(`/projects/${projectId}/branches/${branchId}/languages/progress?limit=500`);
   return getProgressFromResponse(progressResponse);
 }
 
-async function getProjectProgress({ crowdinApi, projectId }) {
-  const progressResponse = await crowdinApi.get(`/projects/${projectId}/languages/progress?limit=500`);
+async function getProjectProgress({ projectId }) {
+  const progressResponse = await axios.get(`/projects/${projectId}/languages/progress?limit=500`);
   return getProgressFromResponse(progressResponse)
 }
 
