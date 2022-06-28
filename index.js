@@ -22,6 +22,17 @@ async function run() {
        'Authorization': `Bearer ${apiToken}`
       }
     });
+    crowdinApi.interceptors.response.use(
+      response => response,
+      error => {
+        const errorMessageInBody = error.response.data.error?.message;
+        if (errorMessageInBody) {
+          throw new Error(`${error.message}: ${errorMessageInBody}`);
+        }
+
+        throw error;
+      }
+    );
 
     const progresses = await (
       branchName
