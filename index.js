@@ -77,12 +77,12 @@ async function getBranchProgress({ crowdinApi, projectId, branchName }) {
     throw new Error(`No branch found with name '${branchName}'`);
   }
 
-  const progressResponse = await crowdinApi.get(`/projects/${projectId}/branches/${branchId}/languages/progress`);
+  const progressResponse = await crowdinApi.get(`/projects/${projectId}/branches/${branchId}/languages/progress?limit=500`);
   return getProgressFromResponse(progressResponse);
 }
 
 async function getProjectProgress({ crowdinApi, projectId }) {
-  const progressResponse = await crowdinApi.get(`/projects/${projectId}/languages/progress`);
+  const progressResponse = await crowdinApi.get(`/projects/${projectId}/languages/progress?limit=500`);
   return getProgressFromResponse(progressResponse)
 }
 
