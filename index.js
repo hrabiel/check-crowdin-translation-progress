@@ -5,13 +5,13 @@ run();
 
 async function run() {
   try {
-    const apiToken = core.getInput('api-token');
-    const projectId = core.getInput('project-id');
+    const apiToken = core.getInput('api-token', { required: true });
+    const projectId = core.getInput('project-id', { required: true });
     const organizationDomain = core.getInput('organization-domain');
     const languages = core.getInput('languages').split(',');
     const branchName = core.getInput('branch-name');
     const targetProgress = Number(core.getInput('target-progress'));
-    const checkApproval = core.getInput('check-approval') === 'true' ? true : false;
+    const checkApproval = core.getBooleanInput('check-approval');
 
     setupAxios({ apiToken, organizationDomain });
 
