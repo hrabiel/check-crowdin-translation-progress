@@ -56,7 +56,7 @@ function setupAxios({ apiToken, organizationDomain }) {
     ? `https://${organizationDomain}.api.crowdin.com/api/v2/`
     : 'https://api.crowdin.com/api/v2/';
 
-  axios.defaults.baseUrl = apiBaseUrl;
+  axios.defaults.baseURL = apiBaseUrl;
   axios.defaults.headers.common['Authorization'] = `Bearer ${apiToken}`;
   axios.interceptors.response.use(
     response => response,
