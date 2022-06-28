@@ -23,7 +23,7 @@ async function run() {
     const projectLanguages = progresses.map(item => item.languageId);
     const languagesToCheck = languages.length ? languages : projectLanguages;
 
-    let errors = [];
+    const errors = [];
     languagesToCheck.forEach(language => {
       if (!projectLanguages.includes(language)) {
         errors.push(
