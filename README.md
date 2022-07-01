@@ -34,13 +34,15 @@ More info about versions management in Crowdin: https://support.crowdin.com/vers
       project-id: "12345"
 
         # Crowdin branch name, for example `"feature.my-awesome-feature"`.
-        # Should be provided if you use branches in Crowdin and you want to check progress for specific branch only.
+        # Should be provided if you use branches in Crowdin and you want to check progress for
+        # specific branch only.
         # Skip if you want to check progress for the whole project.
         #
         # Required: false
       branch-name: "feature.my-awesome-feature"
 
-        # List of codes for languages that should be checked, separated by comma, for example `"be,fr,lt"`.
+        # List of codes for languages that should be checked, separated by comma,
+        # for example `"be,fr,lt"`.
         # You can skip this input if you want to check all target languages of your project.
         #
         # Required: false
@@ -55,7 +57,8 @@ More info about versions management in Crowdin: https://support.crowdin.com/vers
         # Default: "100"
       target-progress: "50"
 
-        # If `true`, the check will be run against approval (proofread) progress instead of translation progress.
+        # If `true`, the check will be run against approval (proofread) progress instead of
+        # translation progress.
         #
         # Required: false
         # Default: "true"
