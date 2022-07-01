@@ -8,7 +8,8 @@ Either translation progress or approval (proofread) progress can be checked.
 
 Can be used as a part of CI/CD pipelines to ensure that:
 - all features are completely translated before they are merged to main branch,
-- the project is released 100% localized.
+- the project can be released only if 100% translated,
+- etc.
 
 More info about versions management in Crowdin: https://support.crowdin.com/versions-management/
 
