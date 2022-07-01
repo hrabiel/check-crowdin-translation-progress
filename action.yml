@@ -25,7 +25,6 @@ inputs:
       List of codes for languages that should be checked, separated by comma, for example `"be,fr,lt"`.
       You can skip this input if you want to check all target languages of your project.
     required: false
-    default: ""
   target-progress:
     description: >
       Percentage of progress that is sufficient for you.
