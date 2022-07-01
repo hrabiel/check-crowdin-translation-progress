@@ -38,7 +38,7 @@ inputs:
     description: >
       If `true`, the check will be run against approval (proofread) progress instead of translation progress.
     required: false
-    default: "false"
+    default: "true"
 runs:
   using: "node16"
   main: "dist/index.js"
