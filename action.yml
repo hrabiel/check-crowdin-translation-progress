@@ -1,28 +1,42 @@
 name: "check-crowdin-translation-progress"
-description: "Checks Crowdin translation progress"
+description: "Checks translation and approval progress in Crowdin"
 inputs:
   api-token:
-    description: "Crowdin API token"
+    description: >
+      Crowdin personal access token.
     required: true
   organization-domain:
-    description: "Domain of your organization (for Crowdin Enterprise only)"
+    description: >
+      Domain of your organization (for Crowdin Enterprise only).
+      Skip if your account is non-enterprise.
     required: false
   project-id:
-    description: "Crowdin project id"
+    description: >
+      ID of your project in Crowdin.
     required: true
   branch-name:
-    description: "Crowdin branch name"
+    description: >
+      Crowdin branch name, for example `"feature.my-awesome-feature"`.
+      Should be provided if you use branches in Crowdin and you want to check progress for specific branch only.
+      Skip if you want to check progress for the whole project.
     required: false
   languages:
-    description: "Languages"
+    description: >
+      List of codes for languages that should be checked, separated by comma, for example `"be,fr,lt"`.
+      You can skip this input if you want to check all target languages of your project.
     required: false
     default: ""
   target-progress:
-    description: "Required progress"
+    description: >
+      Percentage of progress that is sufficient for you.
+      Example: `"95"`.
+      If actual progress is less than this, the check will fail.
+      Skip if your desired progress is 100%.
     required: false
     default: "100"
   check-approval:
-    description: "Check approval progress instead of translation progress"
+    description: >
+      If `true`, the check will be run against approval (proofread) progress instead of translation progress.
     required: false
     default: "false"
 runs:
