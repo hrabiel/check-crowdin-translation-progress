@@ -23,6 +23,7 @@ async function run() {
     const projectLanguages = progresses.map(item => item.languageId);
     const languagesToCheck = languages.length ? languages : projectLanguages;
 
+    core.info(`Checking progress for languages: ${languagesToCheck.join(',')}...`);
     const errors = [];
     languagesToCheck.forEach(language => {
       if (!projectLanguages.includes(language)) {
@@ -38,9 +39,16 @@ async function run() {
       if (progressPercentage < targetProgress) {
         errors.push(
           `${checkApproval ? 'Approval' : 'Translation'} progress for '${language}' (${progressPercentage}%) ` +
-          `is less then target progress (${targetProgress}%)`
-        )
+          `is less than target progress (${targetProgress}%).`
+        );
+        return;
       }
+
+      core.info(
+        `SUCCESS: ` +
+        `${checkApproval ? 'Approval' : 'Translation'} progress for '${language}' is ${progressPercentage}% ` +
+        `(target progress is ${targetProgress}%).`
+      );
     });
 
     if (errors.length) {
@@ -72,19 +80,27 @@ function setupAxios({ apiToken, organizationDomain }) {
 }
 
 async function getBranchProgress({ projectId, branchName }) {
+  core.info(`Getting branch by name '${branchName}'...`);
   const listBranchesResponse = await axios.get(`/projects/${projectId}/branches?name=${branchName}`);
   const branchId = listBranchesResponse.data.data[0]?.data?.id;
   if (!branchId) {
     throw new Error(`No branch found with name '${branchName}'`);
   }
+  core.info('Done!');
 
+  core.info(`Getting progress for the branch (id=${branchId})...`);
   const progressResponse = await axios.get(`/projects/${projectId}/branches/${branchId}/languages/progress?limit=500`);
+  core.info('Done!');
+
   return getProgressFromResponse(progressResponse);
 }
 
 async function getProjectProgress({ projectId }) {
+  core.info('Getting progress for the project...');
   const progressResponse = await axios.get(`/projects/${projectId}/languages/progress?limit=500`);
-  return getProgressFromResponse(progressResponse)
+  core.info('Done!');
+
+  return getProgressFromResponse(progressResponse);
 }
 
 function getProgressFromResponse(response) {
