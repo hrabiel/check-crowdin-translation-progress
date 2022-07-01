@@ -34,7 +34,7 @@ async function run() {
         return;
       }
 
-      const progress = progresses.find(item => item.languageId == language);
+      const progress = progresses.find(item => item.languageId === language);
       const progressPercentage = checkApproval ? progress.approvalProgress : progress.translationProgress;
       if (progressPercentage < targetProgress) {
         errors.push(
