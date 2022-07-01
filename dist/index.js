@@ -8296,7 +8296,7 @@ async function run() {
     const apiToken = core.getInput('api-token', { required: true });
     const projectId = core.getInput('project-id', { required: true });
     const organizationDomain = core.getInput('organization-domain');
-    const languages = core.getInput('languages').split(',');
+    const languages = core.getInput('languages') ? core.getInput('languages').split(',') : [];
     const branchName = core.getInput('branch-name');
     const targetProgress = Number(core.getInput('target-progress'));
     const checkApproval = core.getBooleanInput('check-approval');
