@@ -8325,17 +8325,23 @@ async function run() {
       const progress = progresses.find(item => item.languageId === language);
       const progressPercentage = checkApproval ? progress.approvalProgress : progress.translationProgress;
       if (progressPercentage < targetProgress) {
+        const totalPhrases = progress.phrases.total;
+        const donePhrases = checkApproval ? progress.phrases.approved : progress.phrases.translated;
+        const totalWords = progress.words.total;
+        const doneWords = checkApproval ? progress.words.approved : progress.words.translated;
+
         errors.push(
-          `${checkApproval ? 'Approval' : 'Translation'} progress for '${language}' (${progressPercentage}%) ` +
-          `is less than target progress (${targetProgress}%).`
+          `${checkApproval ? 'Proofreading' : 'Translation'} not completed for "${language}": ` +
+          `${progressPercentage}% done` +
+          `(${donePhrases} of ${totalPhrases} strings, ${doneWords} of ${totalWords} words), ` +
+          `target percentage is ${targetProgress}%.`
         );
         return;
       }
 
       core.info(
-        `SUCCESS: ` +
-        `${checkApproval ? 'Approval' : 'Translation'} progress for '${language}' is ${progressPercentage}% ` +
-        `(target progress is ${targetProgress}%).`
+        `${checkApproval ? 'Proofreading' : 'Translation'} completed for "${language}": ` +
+        `${progressPercentage}% done (target percentage is ${targetProgress}%).`
       );
     });
 
