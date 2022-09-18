@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/hrabiel/check-crowdin-translation-progress#readme",
   "dependencies": {
-    "@actions/core": "^1.9.0",
+    "@actions/core": "^1.9.1",
     "axios": "^0.27.2"
   },
   "devDependencies": {
